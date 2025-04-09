@@ -1,0 +1,62 @@
+summarize_task:
+  description: >
+    This task involves retrieving and summarizing a Reddit discussion related to the {product}.
+    The summarizer should focus on capturing the primary viewpoints, arguments, 
+    and user sentiments about the {product}, and then compile this information 
+    into a concise analysis.
+
+  expected_output: >
+    1. A clear, concise summary of the Reddit discussion, 
+       capturing the main ideas and outcomes.
+    2. A list of the key advantages and disadvantages of the {product}, separated by ; 
+       as expressed by users in the discussion .
+    3. An overall rating (in percentage) that reflects the general sentiment 
+       of the discussion regarding the {product}.
+  agent: summarizer
+
+features_extraction_task:
+  description: >
+    This task involves extracting and summarizing key features of the {product}
+    from a given discussion. The agent should identify distinct features
+    (e.g., battery life, camera, performance, etc.) and provide a concise summary
+    of user feedback, focusing on strengths and weaknesses for each feature.
+
+  expected_output: >
+    1. A structured list or grouping of the product’s features mentioned in the discussion.
+    2. A concise summary for each feature, highlighting user opinions, 
+       praises, and criticisms where applicable.
+
+  agent: features_extraction
+
+comparison_analysis_task:
+  description: >
+    This task involves identifying and analyzing any competitor or alternative 
+    products mentioned in the discussion about the {product}. The agent should highlight 
+    how users compare these competitors to the {product} in terms of features, performance, 
+    price, and overall user sentiment.
+
+  expected_output: >
+    1. A list of competitors (or alternative products) mentioned in the discussion.
+    2. Key comparisons that users make between the {product} and each competitor, 
+       focusing on aspects such as price, performance, reliability, design, etc.
+    3. A concise summary of how the {product} is perceived relative to its main rivals, 
+       including any notable advantages or disadvantages highlighted by users.
+
+  agent: comparison_analysis
+
+
+timeline_analysis_task:
+  description: >
+    Analyze the discussion timeline and user sentiment over time, but focus only on the major changes and key events.
+    Instead of providing a detailed timeline for every period, the agent should identify only the critical time segments
+    where discussion volume or sentiment shows marked changes—such as spikes due to product launches, updates, or major news events.
+
+  expected_output: >
+    1. A concise timeline that lists only the significant time segments (e.g., weeks/months) where notable changes occurred,
+       represented as a list of TimeSegment objects (each with a period, volume, sentiment, and optional highlights).
+    2. For each significant time segment, include brief highlights explaining the probable reasons behind the change 
+       (e.g., a new release, discount announcement, or competitor news).
+    3. An overall trend summary that succinctly describes how user attitudes and focal points have shifted during the analyzed timeframe.
+
+  agent: timeline_analyzer
+
