@@ -1,3 +1,4 @@
+
 # RedditMind Project
 
 Welcome to **RedditMind**, an intelligent application that leverages Reddit discussions to analyze products and topics using advanced AI agentic capabilities. This Streamlit-based project fetches data from Reddit via **PRAW** and uses a suite of AI-powered agents to generate insights, summaries, and detailed analyses.
@@ -44,18 +45,26 @@ Welcome to **RedditMind**, an intelligent application that leverages Reddit disc
    pip install -r requirements.txt
    ```
 
-3. **Install CrewAI Separately**  
-   RedditMind uses the Crew framework for its AI agentic analysis. Please install CrewAI separately by following the instructions available at https://docs.crewai.com/installation
+3. **Configure Reddit API Credentials:**  
+   Create an `.env` file in the project directory and add your Reddit API credentials. You can obtain these values by registering your application on Reddit's developer portal.
+   ```env
+   REDDIT_CLIENT_ID=your_reddit_client_id
+   REDDIT_CLIENT_SECRET=your_reddit_client_secret
+   REDDIT_USER_AGENT=your_reddit_user_agent
+   ```
 
-4. **Set Up Environment Variables**  
-   Create an `.env` file in the project directory and include your API key for the LLM. For example:
+4. **Install CrewAI Separately**  
+   RedditMind uses the Crew framework for its AI agentic analysis. Please install CrewAI separately by following the instructions available at [CrewAI Installation](https://docs.crewai.com/installation).
+
+5. **Set Up Environment Variables for LLM API:**  
+   In the same `.env` file, include your API key for the LLM. For example:
    ```env
    GEMINI_API_KEY=your_gemini_api_key_here
    # or
    OPENAI_API_KEY=your_openai_api_key_here
    ```
 
-5. **(Optional) Setup a Virtual Environment**  
+6. **(Optional) Setup a Virtual Environment**  
    It’s recommended to use a virtual environment (like `venv` or `conda`) to manage dependencies without affecting your system-wide packages.
 
 ## Usage
