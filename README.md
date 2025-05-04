@@ -1,41 +1,82 @@
-
 # RedditMind Project
 
 Welcome to **RedditMind**, an intelligent application that leverages Reddit discussions to analyze products and topics using advanced AI agentic capabilities. This Streamlit-based project fetches data from Reddit via **PRAW** and uses a suite of AI-powered agents to generate insights, summaries, and detailed analyses.
 
-## Overview
+## Prerequisites
 
-**RedditMind** is designed to quickly gather and analyze Reddit discussions about any product or topic you specify. With a few clicks, you can retrieve posts and comments from multiple subreddits and see:
-  
-- A concise summary of the conversation, including an overall sentiment rating.
-- Detailed extraction of key product features along with their pros and cons.
-- A comparative analysis of competitors mentioned in the discussion.
-- A timeline analysis highlighting key trends and events that influence sentiment over time.
+Before installing RedditMind, you'll need:
 
-## Key Features
+1. **Reddit API Credentials:**
+   * Go to [Reddit App Preferences](https://www.reddit.com/prefs/apps).
+   * Create a new application (select `script` type).
+   * Note down the **client ID** and **client secret**.
 
-- **Reddit Data Fetching:**  
-  Uses **PRAW** to search and collect relevant posts and comments across various subreddits within a chosen time frame.
+2. **LLM API Key:**
+   * You need either a Gemini or OpenAI API key for the AI analysis.
 
-- **AI Agentic Analysis:**  
-  The core of RedditMind’s functionality lies in its AI agents—powered by the Crew framework. These agents perform specific tasks:
-  
-  - **Summarizer:**  
-    Provides an overall summary, highlighting the discussion’s primary viewpoints, key pros and cons, and an overall rating expressed as a percentage.
-  
-  - **Features Extraction:**  
-    Extracts and categorizes user feedback on different product features, summarizing the strengths and weaknesses noted in the discussion.
-  
-  - **Competitor Analysis:**  
-    Compares alternative or competitor products mentioned, giving you insights into how the product stands relative to its competitors.
-  
-  - **Timeline Analyzer:**  
-    Reviews the progression of discussions over time, pinpointing significant peaks in activity or shifts in sentiment that can indicate product updates or market changes.
+3. **Environment File:**
+   Create a `.env` file in the project's root directory:
+   ```env
+   # Reddit API Credentials (required)
+   REDDIT_CLIENT_ID=YOUR_CLIENT_ID
+   REDDIT_CLIENT_SECRET=YOUR_CLIENT_SECRET
+   REDDIT_USER_AGENT=RedditMind/1.0
 
-- **Interactive Dashboard:**  
-  Built with Streamlit, the app provides a user-friendly interface to configure search parameters, filter results, and display visualizations including charts, tables, and timelines.
+   # LLM API Key (add either Gemini OR OpenAI)
+   GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+   # OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+   ```
+   Replace the placeholder values with your actual keys.
 
-## Installation
+4. **Config Files:**
+   Ensure you have the `config/` directory with `agents.yaml` and `tasks.yaml` files.
+
+   **LLM Configuration:**
+   You can specify which Large Language Model (LLM) each agent should use directly within the `config/agents.yaml` file. Add an `llm:` key under the agent's definition. Make sure you have provided the corresponding API key in your `.env` file.
+
+
+   **Available Models:**
+
+   *   **OpenAI (Requires `OPENAI_API_KEY` in `.env`)**
+       ```
+       gpt-4
+       gpt-4.1
+       gpt-4.1-mini-2025-04-14
+       gpt-4.1-nano-2025-04-14
+       gpt-4o
+       gpt-4o-mini
+       o1-mini
+       o1-preview
+       ```
+
+   *   **Anthropic (Requires `ANTHROPIC_API_KEY` in `.env`)**
+       ```
+       claude-3-5-sonnet-20240620
+       claude-3-sonnet-20240229
+       ```
+
+   *   **Gemini (Requires `GEMINI_API_KEY` in `.env`)**
+       ```
+       gemini/gemini-1.5-flash
+       gemini/gemini-1.5-pro
+       gemini/gemini-2.0-flash-lite-001
+       gemini/gemini-2.0-flash-001
+       gemini/gemini-2.0-flash-thinking-exp-01-21
+       gemini/gemini-2.5-flash-preview-04-17
+       gemini/gemini-2.5-pro-exp-03-25
+       gemini/gemini-gemma-2-9b-it
+       gemini/gemini-gemma-2-27b-it
+       gemini/gemma-3-1b-it
+       gemini/gemma-3-4b-it
+       gemini/gemma-3-12b-it
+       gemini/gemma-3-27b-it
+       ```
+
+## Installation and Setup
+
+You can run RedditMind either with Docker (recommended) or directly on your local machine.
+
+### Option 1: Local Installation
 
 1. **Clone or Download** this repository.
 
@@ -45,54 +86,37 @@ Welcome to **RedditMind**, an intelligent application that leverages Reddit disc
    pip install -r requirements.txt
    ```
 
-3. **Configure Reddit API Credentials:**  
-   Create an `.env` file in the project directory and add your Reddit API credentials. You can obtain these values by registering your application on Reddit's developer portal.
-   ```env
-   REDDIT_CLIENT_ID=your_reddit_client_id
-   REDDIT_CLIENT_SECRET=your_reddit_client_secret
-   REDDIT_USER_AGENT=your_reddit_user_agent
-   ```
-
-4. **Install CrewAI Separately**  
-   RedditMind uses the Crew framework for its AI agentic analysis. Please install CrewAI separately by following the instructions available at [CrewAI Installation](https://docs.crewai.com/installation).
-
-5. **Set Up Environment Variables for LLM API:**  
-   In the same `.env` file, include your API key for the LLM. For example:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   # or
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
-
-6. **(Optional) Setup a Virtual Environment**  
-   It’s recommended to use a virtual environment (like `venv` or `conda`) to manage dependencies without affecting your system-wide packages.
-
-## Usage
-
-1. **Run the Streamlit App**  
-   Start the application with:
+3. **Run the Application**  
+   Start the Streamlit app with:
    ```bash
-   streamlit run app.py
+   streamlit run src/reddit_mind/app.py
    ```
-2. **Configure Your Query:**  
-   Use the sidebar to provide:
-   - **Topic:** The product or topic you want to analyze (e.g., “iPhone 16”).
-   - **Subreddits:** A comma-separated list (e.g., "Apple, technology").
-   - **Time Range:** Options ranging from "All Time" to "Past Week".
-   - **Number of Posts/Comments:** Set the fetch limits for posts and comments.
 
-3. **Data Fetching and Filtering:**  
-   After clicking “Fetch Data from Reddit,” the app retrieves and displays the data. You can then filter this dataset by subreddit and score range to tailor your analysis.
+### Option 2: Docker Installation
 
-4. **Run AI Analysis:**  
-   Hit the “Analysis the data” button to trigger the AI agents. The Crew-based agents will process the filtered data and generate:
-   - A summary (overview, pros, cons, and rating).
-   - Detailed feature extraction.
-   - Competitor analysis.
-   - Timeline analysis.
-  
-   The results are displayed across different pages, such as the Features, Competitor, Timeline, Charts, and Top Titles pages.
+1. **Build the Docker Image:**
+   ```bash
+   docker build -t reddit-mind .
+   ```
+
+2. **Run the Container:**
+   ```bash
+   docker run --env-file .env -p 8501:8501 reddit-mind
+   ```
+
+3. **Access the App:**
+   Open your browser and navigate to `http://localhost:8501`
+
+## Usage Instructions
+
+Once the app is running (via either method):
+
+1. Enter your topic (e.g., "iPhone 16") and target subreddits.
+2. Click "Fetch Data from Reddit" to retrieve posts and comments.
+3. Filter the data if needed.
+4. Click "Analysis the data" to run the AI analysis.
+5. View the generated insights, including overall summary, features, competitors, and timeline analysis.
 
 ## License
 
-This project is provided as-is for educational and prototyping purposes. Feel free to adapt it to your needs. For any further details on licensing, please refer to the repository or contact the project maintainer.
+This project is provided as-is for educational and prototyping purposes.

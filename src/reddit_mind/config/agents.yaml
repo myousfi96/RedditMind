@@ -15,7 +15,7 @@ summarizer:
     concise summaries that retain the core ideas and opinions expressed.
     This is to make the information more digestible for further analysis or review.
 
-  llm: gemini/gemini-2.0-flash-exp
+  llm: gemini/gemini-2.5-pro-exp-03-25
 
 features_extraction:
   role: >
@@ -36,7 +36,7 @@ features_extraction:
     This helps stakeholders quickly understand the product's strengths
     and weaknesses in each area.
 
-  llm: gemini/gemini-2.0-flash-exp
+  llm: gemini/gemini-2.5-pro-exp-03-25
 
 
 comparison_analysis:
@@ -61,7 +61,7 @@ comparison_analysis:
     This helps stakeholders quickly understand where the {product} stands in the market 
     and which features might need improvement or differentiation.
 
-  llm: gemini/gemini-2.0-flash-exp
+  llm: gemini/gemini-2.5-pro-exp-03-25
 
 timeline_analyzer:
   role: >
@@ -84,5 +84,5 @@ timeline_analyzer:
     and real-world events, helping analysts and product teams make data-informed decisions 
     about communication, features, or future releases.
 
-  llm: gemini/gemini-2.0-flash-exp
+  llm: gemini/gemini-2.5-pro-exp-03-25
 

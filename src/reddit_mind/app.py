@@ -6,15 +6,23 @@ from typing import List
 from datetime import datetime
 import os
 from crew import RedditMind
+from dotenv import load_dotenv
+
+load_dotenv()
 
 ############################
 # 1) PRAW Setup
 ############################
 
 def init_reddit():
-    REDDIT_CLIENT_ID = ''
-    REDDIT_CLIENT_SECRET = ''
-    REDDIT_USER_AGENT = ''
+    REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
+    REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
+    REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT", "reddit_gpt_analysis by /u/YOUR_USERNAME")
+
+    if not REDDIT_CLIENT_ID or not REDDIT_CLIENT_SECRET:
+        st.error("Missing Reddit API credentials. Please set REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET environment variables.")
+        st.stop()
+
     return praw.Reddit(
         client_id=REDDIT_CLIENT_ID,
         client_secret=REDDIT_CLIENT_SECRET,
